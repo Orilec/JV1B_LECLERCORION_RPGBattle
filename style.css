@@ -2,7 +2,7 @@
     display:flex;
     background-image: url('battleback5.png');
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: cover;
     flex-direction: column;
     justify-content: space-between;
 
