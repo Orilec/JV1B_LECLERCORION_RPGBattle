@@ -1,0 +1,155 @@
+.interface{
+    display:flex;
+    background-image: url('battleback5.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+.haut{
+    display: flex;
+    justify-content: center;
+}
+#dialogue{
+    color: white;
+    background-color: black;
+    display: block;
+    height: 30px;
+    width: 400px;
+    border: 5px solid grey;
+    border-radius: 4px;
+    padding: 10px;
+}
+.milieu{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.monstres{
+    display: flex;
+    width: 200px;
+    flex-direction: column;
+}
+.heros{
+    transform: scaleX(-1)
+
+}
+.bas{
+    display: flex;
+    justify-content: center;
+}
+#info_joueurs{
+    display: flex;
+    height:auto;
+    width: 300px;
+    border: 5px solid grey;
+    background-color: black;
+    color: white;
+    flex-direction:column;
+    justify-content:space-between;
+}
+#info_joueur1{
+    display: flex;
+    border: 2px solid grey;
+    flex-direction:row;
+    justify-content: space-evenly;
+}
+#entete{
+    display: flex;
+    border: 2px solid grey;
+    flex-direction:row;
+    justify-content: space-evenly;
+}
+
+#info_joueur2{
+    display: flex;
+    border: 2px solid grey;
+    flex-direction:row;
+    justify-content: space-evenly;
+}
+
+#info_joueur3{
+    display: flex;
+    border: 2px solid grey;
+    flex-direction:row;
+    justify-content: space-evenly;
+}
+
+#info_joueur4{
+    display: flex;
+    border: 2px solid grey;
+    flex-direction:row;
+    justify-content: space-evenly;
+}
+#action{
+    display: flex;
+    border: 5px solid grey;
+    background-color: black;
+    color:white;
+    flex-direction: column;
+    justify-self: flex-end;
+    padding:5px;
+}
+#attaque:hover{
+    color: gray;
+
+}
+#defense:hover{
+    color: gray;
+
+}
+#magie:hover{
+    color: gray;
+
+}
+
+
+#monstre2{
+
+    align-self: flex-end;
+}
+
+.monstreinfo1{
+    height: auto;
+    width: auto;
+    position:relative;
+    bottom: 40px;
+    display: inline-block;
+    visibility: hidden;
+    background-color: black;
+    color:white;
+}
+
+.monstreinfo2{
+    width: auto;
+    position:relative;
+    bottom: 40px;
+    display: inline-block;
+    visibility: hidden;
+    background-color: black;
+    color:white;
+}
+.monstreinfo3{
+    height: auto;
+    width: auto;
+    position:relative;
+    bottom: 40px;
+    display: inline-block;
+    visibility: hidden;
+    background-color: black;
+    color:white;
+}
+
+#monstre1:hover .monstreinfo1{
+    visibility: visible;
+
+}
+#monstre2:hover .monstreinfo2{
+    visibility: visible;
+
+}
+#monstre3:hover .monstreinfo3{
+    visibility: visible;
+
+}
