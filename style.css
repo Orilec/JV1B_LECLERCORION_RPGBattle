@@ -21,6 +21,15 @@
     border-radius: 4px;
     padding: 10px;
 }
+
+#confirm{
+    color: white;
+    background-color: black;
+    display: block;
+    border: 5px solid grey;
+    border-radius: 4px;
+    padding: 10px;
+}
 .milieu{
     display: flex;
     flex-direction: row;
@@ -83,6 +92,7 @@
     justify-content: space-evenly;
 }
 #action{
+    visibility: hidden;
     display: flex;
     border: 5px solid grey;
     background-color: black;
@@ -93,15 +103,18 @@
 }
 #attaque:hover{
     color: gray;
-
 }
+
 #defense:hover{
     color: gray;
-
 }
+
 #magie:hover{
     color: gray;
+}
 
+#confirm:hover{
+    color: gray;
 }
 
 
