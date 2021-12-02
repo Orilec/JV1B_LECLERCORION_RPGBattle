@@ -13,7 +13,6 @@ monstre3= document.getElementById("monstre2");
 
 
 hero_actif= 0; //déclaration de variables
-monstre_actif= 0;
 nom_actif= 0;
 pv_actif= 0;
 tirage= 0;
@@ -27,11 +26,14 @@ attaquejoueur4= 3;
 attaquemonstre1= 5;
 attaquemonstre2= 10;
 attaquemonstre3= 5;
+monstre_actif= 0;
+attaquemonstre_actif= 0;
 attaque_actif= 0;
 compteurClick=0;
 
 
 function riposte(){ //riposte aléatoire des ennemis
+
       tirage= Math.floor(Math.random()*4)+1;
       if (tirage==1){
         hero_vise= document.getElementById("hero1");
@@ -110,7 +112,7 @@ if (compteurClick==0){
 attaque()
 compteurClick=compteurClick+1;
 setTimeout(function(){
-dialogue.innerHTML="Passer au joueur suivant?";
+dialogue.innerHTML="Passer au joueur suivant?"; //rajouter variable pour savoir si fin de tour complet ou non
 },2000)
 }  
 }
@@ -120,7 +122,6 @@ confirmbutton.onclick= function tour(){ //déroulement d'un tour
   compteurClick=0; 
   hero_actif= document.getElementById("hero1");
   nom_actif= document.getElementById("nom_joueur1");
-  pv_actif= document.getElementById("pv_joueur1");
   attaque_actif= attaquejoueur1; 
   
   action.style.visibility = "visible"; //apparition de la boîte d'actions
@@ -131,7 +132,6 @@ confirmbutton.onclick= function tour(){ //déroulement d'un tour
     compteurClick=0;
     hero_actif= document.getElementById("hero2");
     nom_actif= document.getElementById("nom_joueur2");
-    pv_actif= document.getElementById("pv_joueur2");
     attaque_actif= attaquejoueur2;
     dialogue.innerHTML="Que voulez-vous faire?";
     
@@ -140,7 +140,6 @@ confirmbutton.onclick= function tour(){ //déroulement d'un tour
       compteurClick=0;
       hero_actif= document.getElementById("hero3");
       nom_actif= document.getElementById("nom_joueur3");
-      pv_actif= document.getElementById("pv_joueur3");
       attaque_actif= attaquejoueur3;
       dialogue.innerHTML="Que voulez-vous faire?";
       
@@ -149,7 +148,6 @@ confirmbutton.onclick= function tour(){ //déroulement d'un tour
         compteurClick=0;
         hero_actif= document.getElementById("hero4");
         nom_actif= document.getElementById("nom_joueur4");
-        pv_actif= document.getElementById("pv_joueur4");
         attaque_actif= attaquejoueur4;
         dialogue.innerHTML="Que voulez-vous faire?";
         setTimeout(function(){ //riposte
@@ -168,7 +166,7 @@ confirmbutton.onclick= function tour(){ //déroulement d'un tour
     }
   }
 
-
+//remplacer les variables éléments du dom par des variables inner js pour les actualiser au moment opportun (maybe utiliser des tableaux)
 
 
 
