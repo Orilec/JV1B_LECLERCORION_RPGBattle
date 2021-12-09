@@ -1,18 +1,22 @@
-dialogue= document.getElementById("dialogue"); //éléments du dom interactifs
+dialogue= document.getElementById("dialogue"); //éléments du dom
 attaquebutton= document.getElementById("attaque");
 defensebutton= document.getElementById("defense");
 confirmbutton= document.getElementById("confirm");
 action= document.getElementById("action");
-
-pvmonstre1= document.getElementById("hpmonstre1");//éléments visuels du dom
+pvmonstre1= document.getElementById("hpmonstre1");
 pvmonstre2= document.getElementById("hpmonstre2");
 pvmonstre3= document.getElementById("hpmonstre3");
 monstre1= document.getElementById("monstre1");
 monstre2= document.getElementById("monstre2");
-monstre3= document.getElementById("monstre2");
+monstre3= document.getElementById("monstre3");
+monstreinfo1= document.getElementById("monstreinfo1");
+monstreinfo1= document.getElementById("monstreinfo2");
+monstreinfo1= document.getElementById("monstreinfo3");
+
 
 
 hero_actif= 0; //déclaration de variables
+monstre_actif= 0;
 nom_actif= 0;
 pv_actif= 0;
 tirage= 0;
@@ -24,16 +28,132 @@ attaquejoueur2= 10;
 attaquejoueur3=12;
 attaquejoueur4= 3;
 attaquemonstre1= 5;
-attaquemonstre2= 10;
+attaquemonstre2= 100;
 attaquemonstre3= 5;
-monstre_actif= 0;
-attaquemonstre_actif= 0;
+aura_defense= 0;
 attaque_actif= 0;
 compteurClick=0;
+defense_compteur=0;
+
+joueur1_mort= false;
+joueur2_mort= false;
+joueur3_mort= false;
+joueur4_mort= false;
+
+monstre1_mort= false;
+monstre2_mort= false;
+monstre3_mort= false;
+
+dernier_joueur= false;
+
+
 
 
 function riposte(){ //riposte aléatoire des ennemis
+  defense_vise= 0;
+  if (monstre1_mort == false) { //riposte du premier monstre (s'il n'est pas mort)
+      tirage= Math.floor(Math.random()*4)+1; //tirage au sort du héros qui seras visé
+      if (tirage==1){
+        hero_vise= document.getElementById("hero1");
+        nom_vise= document.getElementById("nom_joueur1");
+        pv_vise= document.getElementById("pv_joueur1");
+      }
+      if (tirage==2){
+        hero_vise= document.getElementById("hero2");
+        nom_vise= document.getElementById("nom_joueur2");
+        pv_vise= document.getElementById("pv_joueur2");
 
+      }
+      if (tirage==3){
+        hero_vise= document.getElementById("hero3");
+        nom_vise= document.getElementById("nom_joueur3");
+        pv_vise= document.getElementById("pv_joueur3");
+
+      }
+      if (tirage==4){
+        hero_vise= document.getElementById("hero4");
+        nom_vise= document.getElementById("nom_joueur4");
+        pv_vise= document.getElementById("pv_joueur4");
+
+      }
+
+      dialogue.innerHTML= "Monstre1 riposte et inflige "+ attaquemonstre1 + " dégats à " + nom_vise.innerHTML+ " qui en bloque " + aura_defense;
+      ;
+      
+      monstre1.animate([ //animation d'attaque du monstre
+        { transform: 'translateX(0px)' },
+        { transform: 'translateX(-50px)' },
+        { transform: 'translateX(0px)' },
+  
+      ], {
+        duration: 500,
+        iterations: 1
+      });
+      setTimeout(function(){     
+        hero_vise.animate([//animation du joueur visé
+        { opacity: '100%' },
+        { opacity: '0%' },
+        { opacity: '100%' },
+      ], {
+        duration: 500,
+        iterations: 1
+      }); }, 500);
+      pv_vise.innerHTML= pv_vise.innerHTML- attaquemonstre1+ aura_defense;
+    }
+
+      if (monstre2_mort == false) { //riposte du deuxième monstre (s'il n'est pas mort)
+        setTimeout(function(){
+          tirage= Math.floor(Math.random()*4)+1;
+          if (tirage==1){
+            hero_vise= document.getElementById("hero1");
+            nom_vise= document.getElementById("nom_joueur1");
+            pv_vise= document.getElementById("pv_joueur1");
+          }
+          if (tirage==2){
+            hero_vise= document.getElementById("hero2");
+            nom_vise= document.getElementById("nom_joueur2");
+            pv_vise= document.getElementById("pv_joueur2");
+
+          }
+          if (tirage==3){
+            hero_vise= document.getElementById("hero3");
+            nom_vise= document.getElementById("nom_joueur3");
+            pv_vise= document.getElementById("pv_joueur3");
+
+          }
+          if (tirage==4){
+            hero_vise= document.getElementById("hero4");
+            nom_vise= document.getElementById("nom_joueur4");
+            pv_vise= document.getElementById("pv_joueur4");
+
+          }
+
+          dialogue.innerHTML= "Monstre2 riposte et inflige "+ attaquemonstre2 + " dégats à " + nom_vise.innerHTML+ " qui en bloque " + aura_defense;
+          ;
+          
+          monstre2.animate([ //animation d'attaque du monstre
+            { transform: 'translateX(0px)' },
+            { transform: 'translateX(-50px)' },
+            { transform: 'translateX(0px)' },
+      
+          ], {
+            duration: 500,
+            iterations: 1
+          });
+          setTimeout(function(){     
+            hero_vise.animate([//animation du joueur visé
+            { opacity: '100%' },
+            { opacity: '0%' },
+            { opacity: '100%' },
+          ], {
+            duration: 500,
+            iterations: 1
+          }); }, 500);
+          pv_vise.innerHTML= pv_vise.innerHTML- attaquemonstre2 +aura_defense;
+      }, 2000);
+    }   
+      if (monstre3_mort == false) { //riposte du troisième monstre (s'il n'est pas mort)
+      setTimeout(function(){
       tirage= Math.floor(Math.random()*4)+1;
       if (tirage==1){
         hero_vise= document.getElementById("hero1");
@@ -59,9 +179,9 @@ function riposte(){ //riposte aléatoire des ennemis
 
       }
 
-      dialogue.innerHTML= "Monstre1 riposte et inflige "+ attaquemonstre1 + " dégats à " + nom_vise.innerHTML;
+      dialogue.innerHTML= "Monstre3 riposte et inflige "+ attaquemonstre3 + " dégats à " + nom_vise.innerHTML + " qui en bloque " + aura_defense;
       
-      monstre1.animate([ //animation d'attaque du monstre
+      monstre3.animate([ //animation d'attaque du monstre
         { transform: 'translateX(0px)' },
         { transform: 'translateX(-50px)' },
         { transform: 'translateX(0px)' },
@@ -79,11 +199,18 @@ function riposte(){ //riposte aléatoire des ennemis
         duration: 500,
         iterations: 1
       }); }, 500);
-      pv_vise.innerHTML= pv_vise.innerHTML- attaquemonstre1;
+      pv_vise.innerHTML= pv_vise.innerHTML- attaquemonstre3 +aura_defense;
+    }, 4000);
+    }
+    setTimeout(function(){
+      dialogue.innerHTML= "Tour suivant"
+    }, 6000); 
 }
 
+
 function attaque(){ //fonction attaque    
-  dialogue.innerHTML= nom_actif.innerHTML + " attaque et inflige "+ attaque_actif + " dégats à monstre1";
+  if (!monstre1_mort){ //les joueurs attaquent d'abord le monstre 1
+      dialogue.innerHTML= nom_actif.innerHTML + " attaque et inflige "+ attaque_actif + " dégats à monstre1";
 
       hero_actif.animate([ //animation d'attaque du joueur
         { transform: 'translateX(0px)' },
@@ -105,69 +232,225 @@ function attaque(){ //fonction attaque
       });
       pvmonstre1.innerHTML= pvmonstre1.innerHTML-attaque_actif;
     }, 500);
+  }
+  if (monstre1_mort & !monstre2_mort){ //quand le monstre 1 est mort, ils attaquent le monstre 2
+    dialogue.innerHTML= nom_actif.innerHTML + " attaque et inflige "+ attaque_actif + " dégats à monstre2";
+
+    hero_actif.animate([ //animation d'attaque du joueur
+      { transform: 'translateX(0px)' },
+      { transform: 'translateX(50px)' },
+      { transform: 'translateX(0px)' },
+
+    ], {
+      duration: 500,
+      iterations: 1
+    });
+    setTimeout(function(){ //animation du monstre visé     
+      monstre2.animate([
+      { opacity: '100%' },
+      { opacity: '0%' },
+      { opacity: '100%' },
+    ], {
+      duration: 500,
+      iterations: 1
+    });
+    pvmonstre2.innerHTML= pvmonstre2.innerHTML-attaque_actif;
+  }, 500);
+}
+  if (monstre1_mort & monstre2_mort & !monstre3_mort){ //quand le monstre 2 est mort, ils attaquent le monstre 3
+    dialogue.innerHTML= nom_actif.innerHTML + " attaque et inflige "+ attaque_actif + " dégats à monstre3";
+
+    hero_actif.animate([ //animation d'attaque du joueur
+      { transform: 'translateX(0px)' },
+      { transform: 'translateX(50px)' },
+      { transform: 'translateX(0px)' },
+
+    ], {
+      duration: 500,
+      iterations: 1
+    });
+    setTimeout(function(){ //animation du monstre visé     
+      monstre3.animate([
+      { opacity: '100%' },
+      { opacity: '0%' },
+      { opacity: '100%' },
+    ], {
+      duration: 500,
+      iterations: 1
+    });
+    pvmonstre3.innerHTML= pvmonstre3.innerHTML-attaque_actif;
+  }, 500);
+verif_mort()
+}
 }
 
-attaquebutton.onclick= function(){ //permet qu'un joueur ne puisse utiliser qu'une seule action
-if (compteurClick==0){
-attaque()
-compteurClick=compteurClick+1;
+function defense(){
+  dialogue.innerHTML= nom_actif.innerHTML + " utilise défense, toute l'équipe contrera 2 points de dégats à la prochaine riposte"; //ajouter effet visuel
+  aura_defense=2;
+  defense_compteur=1;
+}
+
+function verif_mort(){ //fonction qui vérifie la mort des monstres
+if (pvmonstre1.innerHTML<=0){
+  monstre1_mort=true;
+}
+if (pvmonstre2.innerHTML<=0){ 
+  monstre2_mort=true;
+}
+if (pvmonstre3.innerHTML<=0){
+  monstre3_mort=true;
+}
 setTimeout(function(){
-dialogue.innerHTML="Passer au joueur suivant?"; //rajouter variable pour savoir si fin de tour complet ou non
-},2000)
-}  
+if (monstre1_mort){ //rajouter compteurs pour que le texte ne s'affiche qu'une fois par partie
+  monstre1.style.visibility = "hidden";
+  dialogue.innerHTML="Monstre 1 a été vaincu";
+}
+
+if (monstre2_mort){
+  monstre2.style.visibility = "hidden";
+  dialogue.innerHTML="Monstre 2 a été vaincu";
+  
+}
+
+if (monstre3_mort){
+  monstre3.style.visibility = "hidden";
+  dialogue.innerHTML="Monstre 3 a été vaincu";
+}
+}, 200);
+}
+
+function verif_mort_joueurs(){
+  if (document.getElementById("pv_joueur1").innerHTML <= 0){
+    joueur1_mort=true;
+  }
+  if (document.getElementById("pv_joueur2").innerHTML <= 0){
+    joueur2_mort=true;
+  }
+  if (document.getElementById("pv_joueur3").innerHTML <= 0){
+    joueur3_mort=true;
+  }
+  if (document.getElementById("pv_joueur4").innerHTML <= 0){
+    joueur4_mort=true;
+  }
+
+  setTimeout(function(){
+    if (joueur1_mort){
+      document.getElementById("hero1").style.visibility = "hidden";
+      dialogue.innerHTML="Jeanne a été vaincue";
+    }
+    if (joueur2_mort){
+      document.getElementById("hero2").style.visibility = "hidden";
+      dialogue.innerHTML="Harry a été vaincu";
+    }
+    if (joueur3_mort){
+      document.getElementById("hero3").style.visibility = "hidden";
+      dialogue.innerHTML="Conan a été vaincu";
+    }
+    if (joueur4_mort){
+      document.getElementById("hero4").style.visibility = "hidden";
+      dialogue.innerHTML="Michel a été vaincu";
+    }
+    
+  }, 200);
+
+
+}
+
+function verif_victoire(){
+
+  if (monstre1_mort & monstre2_mort & monstre3_mort){
+
+  }
+
+}
+
+attaquebutton.onclick= function(){ 
+  if (compteurClick==0){//permet qu'un joueur ne puisse utiliser qu'une seule action
+  attaque()
+  compteurClick=compteurClick+1;
+  setTimeout(function(){
+  dialogue.innerHTML="Passer au joueur suivant?";
+  },2000)
+  }  
+}
+
+defensebutton.onclick= function(){ 
+  if (compteurClick==0){//permet qu'un joueur ne puisse utiliser qu'une seule action
+    if (defense_compteur==0){
+      defense()
+      compteurClick=compteurClick+1;
+      setTimeout(function(){
+      dialogue.innerHTML="Passer au joueur suivant?";
+  },2000)
+  }
+  else{
+      dialogue.innerHTML="Un autre joueur a utilisé défense ce tour-ci, utilisez une autre action";
+    }
+    }    
 }
 
 confirmbutton.onclick= function tour(){ //déroulement d'un tour
   //action du joueur 1
-  compteurClick=0; 
-  hero_actif= document.getElementById("hero1");
+  verif_mort_joueurs()
+  aura_defense=0;
+  dernier_joueur==false;
+  compteurClick=0;
+  action.style.visibility = "visible"; //apparition de la boîte d'actions
+  
+  if (!joueur1_mort){
+      hero_actif= document.getElementById("hero1");
   nom_actif= document.getElementById("nom_joueur1");
+  pv_actif= document.getElementById("pv_joueur1");
   attaque_actif= attaquejoueur1; 
   
-  action.style.visibility = "visible"; //apparition de la boîte d'actions
-  dialogue.innerHTML="Que voulez-vous faire?";
 
-  confirmbutton.onclick=function (){
+  setTimeout(function(){
+  dialogue.innerHTML="Que voulez-vous faire?";
+    },2000)
+  }
+  else{
+    Harry()
+  } 
+
+  confirmbutton.onclick=function Harry(){
     //action du joueur 2
+    verif_mort()
     compteurClick=0;
     hero_actif= document.getElementById("hero2");
     nom_actif= document.getElementById("nom_joueur2");
+    pv_actif= document.getElementById("pv_joueur2");
     attaque_actif= attaquejoueur2;
     dialogue.innerHTML="Que voulez-vous faire?";
     
     confirmbutton.onclick=function(){
       //action du joueur 3
+      verif_mort()
       compteurClick=0;
       hero_actif= document.getElementById("hero3");
       nom_actif= document.getElementById("nom_joueur3");
+      pv_actif= document.getElementById("pv_joueur3");
       attaque_actif= attaquejoueur3;
       dialogue.innerHTML="Que voulez-vous faire?";
       
       confirmbutton.onclick=function(){
         //action du joueur 4
+        verif_mort()
+        dernier_joueur==true;
         compteurClick=0;
         hero_actif= document.getElementById("hero4");
         nom_actif= document.getElementById("nom_joueur4");
+        pv_actif= document.getElementById("pv_joueur4");
         attaque_actif= attaquejoueur4;
         dialogue.innerHTML="Que voulez-vous faire?";
-        setTimeout(function(){ //riposte
-          action.style.visibility = "hidden";
-          riposte()
-          },2000)
-
-          confirmbutton.onclick=function(){
-            //passage au tour suivant
-            tour()
-          }
- 
-        }
         
+          confirmbutton.onclick=function(){
+            verif_mort()
+            riposte()
+            confirmbutton.onclick=function(){ //passage au tour suivant
+              tour()
+            }
+          }
+        }
       }
     }
   }
-
-//remplacer les variables éléments du dom par des variables inner js pour les actualiser au moment opportun (maybe utiliser des tableaux)
-
-
-
-
