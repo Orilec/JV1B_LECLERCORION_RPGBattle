@@ -45,6 +45,15 @@ monstre2_mort= false;
 monstre3_mort= false;
 
 dernier_joueur= false;
+dialogueMort_monstre1= false;
+dialogueMort_monstre2= false;
+dialogueMort_monstre3= false;
+
+dialogueMort_joueur1= false;
+dialogueMort_joueur2= false;
+dialogueMort_joueur3= false;
+dialogueMort_joueur4= false;
+
 
 
 
@@ -301,20 +310,22 @@ if (pvmonstre3.innerHTML<=0){
   monstre3_mort=true;
 }
 setTimeout(function(){
-if (monstre1_mort){ //rajouter compteurs pour que le texte ne s'affiche qu'une fois par partie
+if ((monstre1_mort) && (!dialogueMort_monstre1)) {
   monstre1.style.visibility = "hidden";
   dialogue.innerHTML="Monstre 1 a été vaincu";
+  dialogueMort_monstre1= true;
 }
 
-if (monstre2_mort){
+if ((monstre2_mort) && (!dialogueMort_monstre2)){
   monstre2.style.visibility = "hidden";
   dialogue.innerHTML="Monstre 2 a été vaincu";
-  
+  dialogueMort_monstre2= true;
 }
 
-if (monstre3_mort){
+if ((monstre3_mort) && (!dialogueMort_monstre3)){
   monstre3.style.visibility = "hidden";
   dialogue.innerHTML="Monstre 3 a été vaincu";
+  dialogueMort_monstre3= true;
 }
 }, 200);
 }
@@ -334,21 +345,25 @@ function verif_mort_joueurs(){
   }
 
   setTimeout(function(){
-    if (joueur1_mort){
+    if ((joueur1_mort) && (!dialogueMort_joueur1)){
       document.getElementById("hero1").style.visibility = "hidden";
       dialogue.innerHTML="Jeanne a été vaincue";
+      dialogueMort_joueur1= true;
     }
-    if (joueur2_mort){
+    if ((joueur2_mort) && (!dialogueMort_joueur2)){
       document.getElementById("hero2").style.visibility = "hidden";
       dialogue.innerHTML="Harry a été vaincu";
+      dialogueMort_joueur2= true;
     }
-    if (joueur3_mort){
+    if ((joueur3_mort) && (!dialogueMort_joueur3)){
       document.getElementById("hero3").style.visibility = "hidden";
       dialogue.innerHTML="Conan a été vaincu";
+      dialogueMort_joueur3= true;
     }
-    if (joueur4_mort){
+    if ((joueur4_mort) && (!dialogueMort_joueur4)){
       document.getElementById("hero4").style.visibility = "hidden";
       dialogue.innerHTML="Michel a été vaincu";
+      dialogueMort_joueur4= true;
     }
     
   }, 200);
@@ -390,51 +405,67 @@ defensebutton.onclick= function(){
 }
 
 confirmbutton.onclick= function tour(){ //déroulement d'un tour
-  //action du joueur 1
+  
   verif_mort_joueurs()
   aura_defense=0;
   dernier_joueur==false;
-  compteurClick=0;
   action.style.visibility = "visible"; //apparition de la boîte d'actions
-  
+
   if (!joueur1_mort){
-      hero_actif= document.getElementById("hero1");
-  nom_actif= document.getElementById("nom_joueur1");
-  pv_actif= document.getElementById("pv_joueur1");
-  attaque_actif= attaquejoueur1; 
+    //action du joueur 1
+    compteurClick=0;
+    hero_actif= document.getElementById("hero1");
+    nom_actif= document.getElementById("nom_joueur1");
+    pv_actif= document.getElementById("pv_joueur1");
+    attaque_actif= attaquejoueur1; 
+  }
+  else{
+    dialogue.innerHTML="Jeanne est décédée, passer au joueur suivant?";
+  }
+
   
 
   setTimeout(function(){
   dialogue.innerHTML="Que voulez-vous faire?";
     },2000)
-  }
-  else{
-    Harry()
-  } 
 
-  confirmbutton.onclick=function Harry(){
-    //action du joueur 2
+
+
+  confirmbutton.onclick= function (){//action du joueur 2
+    
     verif_mort()
+    if (!joueur2_mort){
     compteurClick=0;
     hero_actif= document.getElementById("hero2");
     nom_actif= document.getElementById("nom_joueur2");
     pv_actif= document.getElementById("pv_joueur2");
     attaque_actif= attaquejoueur2;
     dialogue.innerHTML="Que voulez-vous faire?";
+    }
+    else{
+      dialogue.innerHTML="Harry est décédé, passer au joueur suivant?";
+    }
     
-    confirmbutton.onclick=function(){
-      //action du joueur 3
+    confirmbutton.onclick=function(){ //action du joueur 3
+     
       verif_mort()
+      if (!joueur3_mort){
       compteurClick=0;
       hero_actif= document.getElementById("hero3");
       nom_actif= document.getElementById("nom_joueur3");
       pv_actif= document.getElementById("pv_joueur3");
       attaque_actif= attaquejoueur3;
       dialogue.innerHTML="Que voulez-vous faire?";
+      }
+      else{
+        dialogue.innerHTML="Conan est décédé, passer au joueur suivant?";
+      }
+
       
-      confirmbutton.onclick=function(){
-        //action du joueur 4
+      confirmbutton.onclick=function(){//action du joueur 4
+        
         verif_mort()
+        if (!joueur4_mort){
         dernier_joueur==true;
         compteurClick=0;
         hero_actif= document.getElementById("hero4");
@@ -442,6 +473,10 @@ confirmbutton.onclick= function tour(){ //déroulement d'un tour
         pv_actif= document.getElementById("pv_joueur4");
         attaque_actif= attaquejoueur4;
         dialogue.innerHTML="Que voulez-vous faire?";
+        }
+        else{
+          dialogue.innerHTML="Michel est décédé, passer au joueur suivant?";
+        }
         
           confirmbutton.onclick=function(){
             verif_mort()
