@@ -63,12 +63,12 @@ attaquejoueur2= 10;
 attaquejoueur3=12;
 attaquejoueur4= 3;
 
-attaquemonstre1= 5;
-nom_monstre1= "Turpillon";
-nom_monstre2= "Tripule"
-nom_monstre3= "Trousouffle"
-attaquemonstre2= 100;
-attaquemonstre3= 5;
+attaquemonstre1= 10;
+nom_monstre1= "Turpillon"; //on peut remercier ma mère pour ces magnifiques noms
+nom_monstre2= "Tripule";
+nom_monstre3= "Trousouffle";
+attaquemonstre2= 30;
+attaquemonstre3= 10;
 
 aura_defense= 0;
 attaque_actif= 0;
@@ -94,9 +94,8 @@ dialogueMort_joueur2= false;
 dialogueMort_joueur3= false;
 dialogueMort_joueur4= false;
 
-
-
-function animation_degats_riposte(){
+// déclaration des fonctions
+function animation_degats_riposte(){ //animation et dégats de la riposte
   
   dialogue.innerHTML= nom_monstre_actif+ " riposte et inflige "+ attaquemonstre_actif + " dégats à " + nom_vise.innerHTML+ " qui en bloque " + aura_defense;
       ;
@@ -121,10 +120,11 @@ function animation_degats_riposte(){
       }); }, 500);
       pv_vise.innerHTML= pv_vise.innerHTML- attaquemonstre_actif+ aura_defense;
 }
-function aleatoire(){
-  tirage= Math.floor(Math.random()*4)+1; //tirage au sort du héros qui seras visé
 
-  if ((tirage==1)& (!joueur1_mort)){
+function aleatoire(){ //tirage au sort du héros qui seras visé lors de la riposte
+  tirage= Math.floor(Math.random()*4)+1; 
+
+  if ((tirage==1)& (!joueur1_mort)){ //j'aurais peut-être dû faire une boucle while qui retire un nombre aléatoire si le joueur visé est mort mais je n'ai pas réussi
     hero_vise= joueur1;
     nom_vise= nom_joueur1;
     pv_vise= pv_joueur1;
@@ -145,6 +145,7 @@ function aleatoire(){
     pv_vise= pv_joueur4;
   }
 }
+
 function riposte(){ //riposte aléatoire des ennemis
   defense_vise= 0;
   if (monstre1_mort == false) { //riposte du premier monstre (s'il n'est pas mort)
@@ -179,7 +180,7 @@ function riposte(){ //riposte aléatoire des ennemis
     }, 6000); 
 }
 
-function animation_degats_attaque(){
+function animation_degats_attaque(){ //animations et dégats d'attaque 
   dialogue.innerHTML= nom_actif.innerHTML + " attaque et inflige "+ attaque_actif + " dégats à "+ nom_monstre_vise;
       
       hero_actif.animate([ //animation d'attaque du joueur
@@ -204,7 +205,7 @@ function animation_degats_attaque(){
     }, 500);
 }
 
-function attaque(){//fonction attaque
+function attaque(){ //fonction attaque
   verif_mort()     
   if (!monstre1_mort){ //les joueurs attaquent d'abord le monstre 1
     nom_monstre_vise= nom_monstre1;
@@ -228,10 +229,127 @@ function attaque(){//fonction attaque
     }
 }
 
-function defense(){
-  dialogue.innerHTML= nom_actif.innerHTML + " utilise défense, toute l'équipe contrera 2 points de dégats à la prochaine riposte"; //ajouter effet visuel
+function defense(){ //la défense n'est pas individuelle mais collective
+  dialogue.innerHTML= nom_actif.innerHTML + " utilise défense, toute l'équipe contrera 2 points de dégats à la prochaine riposte";
   aura_defense=2;
   defense_compteur=1;
+}
+
+function soin(){ 
+  valeur_soin= 10;
+  dialogue.innerHTML= "Cliquez sur le joueur a soigner";
+  compteurSoin=0;
+  if (compteurSoin== 0 & !joueur1_mort){
+    joueur1.onclick= function(){
+      pv_joueur1.innerHTML= +pv_joueur1.innerHTML + valeur_soin;
+      dialogue.innerHTML= "Jeanne se soigne elle-même de "+ valeur_soin+ " pv";
+      compteurSoin=1;
+    }
+  }
+  if (compteurSoin== 0 & !joueur2_mort){
+    joueur2.onclick= function(){
+      pv_joueur2.innerHTML= +pv_joueur2.innerHTML + valeur_soin;
+      dialogue.innerHTML= "Jeanne soigne Harry de "+ valeur_soin+ " pv";
+      compteurSoin=1;
+    }
+  }
+  if (compteurSoin== 0 & !joueur3_mort){
+    joueur3.onclick= function(){
+      pv_joueur3.innerHTML= +pv_joueur3.innerHTML + valeur_soin;
+      dialogue.innerHTML= "Jeanne soigne Conan de "+ valeur_soin+ " pv";
+      compteurSoin=1;
+    }
+  }
+  if (compteurSoin== 0 & !joueur4_mort){
+    joueur4.onclick= function(){
+      pv_joueur4.innerHTML= +pv_joueur4.innerHTML + valeur_soin;
+      dialogue.innerHTML= "Jeanne soigne Michel de "+ valeur_soin+ " pv";
+      compteurSoin=1;
+    }
+  }
+}
+
+function mana(){
+  dialogue.innerHTML= "Cliquez sur le joueur auquel rendre de la mana"
+  compteurMana=0;
+  valeur_mana= 10;
+  if (compteurMana== 0 & !joueur1_mort){
+    joueur1.onclick= function(){
+      mana_joueur1.innerHTML= +mana_joueur1.innerHTML + valeur_mana;
+      dialogue.innerHTML= "Michel rend "+ valeur_mana+ " mana à Jeanne";
+      compteurMana=1;
+    }
+  }
+  if (compteurMana== 0 & !joueur2_mort){
+    joueur2.onclick= function(){
+      mana_joueur2.innerHTML= +mana_joueur2.innerHTML + valeur_mana;
+      dialogue.innerHTML= "Michel rend "+ valeur_mana+ " mana à Harry";
+      compteurMana=1;
+    }
+  }
+  if (compteurMana== 0 & !joueur3_mort){
+    joueur3.onclick= function(){
+      mana_joueur3.innerHTML= +mana_joueur3.innerHTML + valeur_mana;
+      dialogue.innerHTML= "Michel rend "+ valeur_mana+ " mana à Conan";
+      compteurMana=1;
+    }
+  }
+  if (compteurMana== 0 & !joueur4_mort){
+    joueur4.onclick= function(){
+      mana_joueur3.innerHTML= +mana_joueur3.innerHTML + valeur_mana;
+      dialogue.innerHTML= "Michel rend "+ valeur_mana+ " mana à lui-même";
+      compteurMana=1;
+    }
+  }
+
+}
+
+function zone(){
+  dialogue.innerHTML= nom_joueur3.innerHTML + " attaque et inflige 5 dégats à tous les monstres";
+      
+      joueur3.animate([ //animation d'attaque du joueur
+        { transform: 'translateX(0px)' },
+        { transform: 'translateX(50px)' },
+        { transform: 'translateX(0px)' },
+
+      ], {
+        duration: 500,
+        iterations: 1
+      });
+      setTimeout(function(){     
+        monstre1.animate([
+        { opacity: '100%' },
+        { opacity: '0%' },
+        { opacity: '100%' },
+      ], {
+        duration: 500,
+        iterations: 1
+      });
+      pvmonstre1.innerHTML= +pvmonstre1.innerHTML-5;
+      monstre2.animate([
+        { opacity: '100%' },
+        { opacity: '0%' },
+        { opacity: '100%' },
+      ], {
+        duration: 500,
+        iterations: 1
+      });
+      pvmonstre2.innerHTML= +pvmonstre2.innerHTML-5;
+      monstre3.animate([
+        { opacity: '100%' },
+        { opacity: '0%' },
+        { opacity: '100%' },
+      ], {
+        duration: 500,
+        iterations: 1
+      });
+      pvmonstre3.innerHTML= +pvmonstre3.innerHTML-5;
+
+    }, 500);
+}
+
+function poison(){ //je n'ai pas eu le temps de coder la fonction de poison
+
 }
 
 function verif_mort(){ //fonction qui vérifie la mort des monstres
@@ -245,7 +363,7 @@ if (pvmonstre3.innerHTML<=0){
   monstre3_mort=true;
 }
 setTimeout(function(){
-if ((monstre1_mort) & (!dialogueMort_monstre1)) {
+if ((monstre1_mort) & (!dialogueMort_monstre1)) { //le dialogue de mort d'un monstre ne s'affichera qu'une fois dans la partie
   monstre1.style.visibility = "hidden";
   dialogue.innerHTML= nom_monstre1+ "a été vaincu";
   dialogueMort_monstre1= true;
@@ -265,7 +383,7 @@ if ((monstre3_mort) & (!dialogueMort_monstre3)){
 }, 200);
 }
 
-function verif_mort_joueurs(){
+function verif_mort_joueurs(){ //fonction qui vérifie la mort des joueurs, même principe que celle des monstres
   if (pv_joueur1.innerHTML <= 0){
     joueur1_mort=true;
   }
@@ -306,20 +424,20 @@ function verif_mort_joueurs(){
 
 }
 
-function verif_victoire(){
+function verif_victoire(){ //test la victoire et ouvre une nouvelle fenêtre avec marqué "victoire"
   if (monstre1_mort & monstre2_mort & monstre3_mort){
     myWindow = window.open("victory.html", "_blank", "width=1000, height=1000");
   }
 }
 
-function verif_defaite(){
+function verif_defaite(){ //test la victoire et ouvre une nouvelle fenêtre avec marqué "défaite"
   if (joueur1_mort & joueur2_mort & joueur3_mort & joueur4_mort){
     myWindow = window.open("defeat.html", "_blank", "width=1000, height=1000");
   }
 }
 
 attaquebutton.onclick= function(){ 
-  if (compteurClick==0){//permet qu'un joueur ne puisse utiliser qu'une seule action
+  if (compteurClick==0){ //permet qu'un joueur ne puisse utiliser qu'une seule action
   attaque()
   compteurClick=compteurClick+1;
   setTimeout(function(){
@@ -330,7 +448,7 @@ attaquebutton.onclick= function(){
 
 defensebutton.onclick= function(){ 
   if (compteurClick==0){//permet qu'un joueur ne puisse utiliser qu'une seule action
-    if (defense_compteur==0){
+    if (defense_compteur==0){ //vérifie si un autre joueur a utilisé défense ce tour-ci, les défenses ne sont pas cumulables
       defense()
       compteurClick=compteurClick+1;
       setTimeout(function(){
@@ -343,17 +461,62 @@ defensebutton.onclick= function(){
     }    
 }
 
+attaque_spe.onclick= function(){
+  if (compteurClick==0){
+    if (hero_actif==joueur1){
+      if (mana_joueur1.innerHTML>9){
+        soin()
+        compteurClick=compteurClick+1;
+        mana_joueur1.innerHTML= +mana_joueur1.innerHTML- 10;
+      }
+      else{
+        dialogue.innerHTML= "Vous n'avez pas assez de mana pour effectuer cette action"
+      }
+    }
+    if (hero_actif==joueur2){
+      if (mana_joueur2.innerHTML>9){
+        poison()
+        compteurClick=compteurClick+1;
+        mana_joueur2.innerHTML= +mana_joueur2.innerHTML- 10;
+      }
+      else{
+        dialogue.innerHTML= "Vous n'avez pas assez de mana pour effectuer cette action"
+      }
+    }
+    if (hero_actif==joueur3){
+      if (mana_joueur3.innerHTML>9){
+        zone()
+        compteurClick=compteurClick+1;
+        mana_joueur3.innerHTML= +mana_joueur3.innerHTML- 10;
+      }
+      else{
+        dialogue.innerHTML= "Vous n'avez pas assez de mana pour effectuer cette action"
+      }
+    }
+    if (hero_actif==joueur4){
+      if (mana_joueur4.innerHTML>9){
+        mana()
+        compteurClick=compteurClick+1;
+        mana_joueur4.innerHTML= +mana_joueur4.innerHTML- 10;
+      }
+      else{
+        dialogue.innerHTML= "Vous n'avez pas assez de mana pour effectuer cette action"
+      }
+    }
+  }
+}
+
 confirmbutton.onclick= function tour(){ //déroulement d'un tour
   joueur4.style.transform="scale(1,1)";
   aura_defense=0;
-  dernier_joueur==false;
+  defense_compteur=0;
   action.style.visibility = "visible"; //apparition de la boîte d'actions
 
   if (!joueur1_mort){
     //action du joueur 1
     attaque_spe.innerHTML= "Soin"
     compteurClick=0;
-    joueur1.style.transform="scale(1.5,1.5)";
+    joueur1.style.transform="scale(1.5,1.5)"; //met en valeur le personnage qui à la main
     hero_actif= joueur1;
     nom_actif= nom_joueur1;
     pv_actif= pv_joueur1;
@@ -388,7 +551,7 @@ confirmbutton.onclick= function tour(){ //déroulement d'un tour
       verif_mort()
       if (!joueur3_mort){
       joueur3.style.transform="scale(1.5,1.5)";
-      attaque_spe.innerHTML= "Grosse Attaque"
+      attaque_spe.innerHTML= "Attaque de zone"
       compteurClick=0;
       hero_actif= joueur3
       nom_actif= nom_joueur3;
@@ -407,7 +570,7 @@ confirmbutton.onclick= function tour(){ //déroulement d'un tour
         verif_mort()
         if (!joueur4_mort){
         joueur4.style.transform="scale(1.5,1.5)";
-        attaque_spe.innerHTML= "Aura de défense"
+        attaque_spe.innerHTML= "Regain de mana"
         dernier_joueur==true;
         compteurClick=0;
         hero_actif= joueur4;
@@ -427,7 +590,7 @@ confirmbutton.onclick= function tour(){ //déroulement d'un tour
             confirmbutton.onclick=function(){ //passage au tour suivant
               verif_mort_joueurs()
               verif_defaite()
-              setTimeout(function(){
+              setTimeout(function(){ //laisse le temps d'afficher les joueurs morts si besoin
               tour()   
             },3000)
               
